@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+       <th>序号</th>
+       <th>ID</th>
+       <th>名称</th>
+        <th>操作</th>
+
+    </tr>
+     {% block  page-mian %}
+         {% for i in all_publisher %}
+        <tr>
+        <td>{{ forloop.counter}}</td>
+        <td>{{i.pk}}</td>
+        <td>{{i.name}}</td>
+        <td>
+            <a href="/edit_shuju/?pk={{ i.pk }}">修改</a>
+            <a href="/del_shuju/?pk={{ i.pk }}">删除</a>
+        </td>
+        </tr>
+    {% endfor %}
+     {% endblock %}
+
+
+</table>
+</body>
+</html>
