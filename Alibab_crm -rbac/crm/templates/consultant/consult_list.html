@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div style="margin: 15px">
+        {% load rbac %}
+        {% if request|has_permission:"consult_add" %}
+            <a href="{% url 'consult_add' %}" class="btn btn-primary btn-sm">添加</a>
+        {% endif %}
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>客户</th>
+                <th>状态</th>
+                <th>跟进日期</th>
+                <th>跟进内容</th>
+                <th>跟进人</th>
+                {% if request|has_permission:"consult_edit" %}
+                    <th>操作</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for consult in all_consult %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ consult.customer }}</td>
+                    <td>{{ consult.get_status_display }}</td>
+                    <td>{{ consult.date }}</td>
+                    <td>{{ consult.note }}</td>
+                    <td>{{ consult.consultant }}</td>
+                    {% if request|has_permission:"consult_edit" %}
+                        <td>
+                            <a href="{% url 'consult_edit' consult.pk %}"> <i class="fa fa-pencil-square-o"></i> </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+    </div>
+{% endblock %}
